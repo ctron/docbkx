@@ -72,13 +72,18 @@ public abstract class AbstractFoMojo extends AbstractMojoBase {
   private String baseUrl;
   
   /**
-   * Keep the default base URL.
+   * Use the local folder as base URL
    * <br/>
-   * This can be used if the images get copied over to the target directory.
+   * If this is set to <code>true</code> (default is <code>false</code>) the base
+   * URL for processing the FO output will be the folder where the FO file resides in.
+   * <br/>
+   * This may be useful if you want to copy your images the same way you do it for HTML output
+   * to the target folder. You will want to set the XSL parameter
+   * <q>keep.relative.image.uris</q> to <q>1</q> as well for this to work properly. 
    * 
    * @parameter
    */
-  private boolean keepBaseUrl = false;
+  private boolean foLocalBaseUrl = false;
 
   /**
    * The fonts that should be taken into account. (Without this parameter, the PDF document
@@ -114,8 +119,8 @@ public abstract class AbstractFoMojo extends AbstractMojoBase {
   File externalFOPConfiguration = null;
   private String currentFileExtension;
 
-  public void setKeepBaseUrl ( boolean keepBaseUrl ) {
-    this.keepBaseUrl = keepBaseUrl;
+  public void setFoLocalBaseUrl ( boolean keepBaseUrl ) {
+    this.foLocalBaseUrl = keepBaseUrl;
   }
   
   /**
@@ -145,8 +150,11 @@ public abstract class AbstractFoMojo extends AbstractMojoBase {
     final FopFactory fopFactory = FopFactory.newInstance();
     final FOUserAgent userAgent = fopFactory.newFOUserAgent();
     
-    if ( !keepBaseUrl ) {
+    if ( !foLocalBaseUrl ) {
       userAgent.setBaseURL(baseUrl);
+    }
+    else {
+      userAgent.setBaseURL(result.getParentFile().toURI().toString());
     }
 
     // FOUserAgent can be used to set PDF metadata
