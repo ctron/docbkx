@@ -8,7 +8,7 @@
   <description>A number of tools for handling DocBook XML transformations.</description>
   <inceptionYear>2006</inceptionYear>
   <organization>
-    <name>Wilfred Springer, Cedric Pronzato</name>
+    <name>Wilfred Springer, Cedric Pronzato, Jens Reimann</name>
     <url>http://code.google.com/p/docbkx-tools/</url>
   </organization>
   <scm>
@@ -32,6 +32,10 @@
     <developer>
       <id>mimil</id>
       <name>Cedric Pronzato</name>
+    </developer>
+    <developer>
+    	<id>jreimann</id>
+    	<name>Jens Reimann</name>
     </developer>
   </developers>
   <mailingLists>
